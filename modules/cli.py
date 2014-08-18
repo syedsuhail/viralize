@@ -28,8 +28,3 @@ def get_user_data(filename):
                 dict1[option]=None
             data.append(dict1)
     return data
-
-
-                         
-
-            

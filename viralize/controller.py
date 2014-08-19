@@ -1,34 +1,21 @@
 import json
 import cli
-
+import publish
 
 #argument recive from user interface as the json object
 filename = cli.filename
 data = cli.get_user_data(filename)
 
-
-'''Checks the which publish module and pass the pointer to that module'''
 def engine_controller():
-    i = 0
-    lenght = len(data)
-    while(i < lenght):
-        data_controler = data[i]['channel']
-        if data_controler == 'twitter':
-            publish_twitter(i)
-            i = i + 1
-        elif data_controler == 'facebook':
-            publish_facebook(i)
-            i = i + 1
-        elif data_controler == 'blog':
-            publish_blog(i)
-            i = i + 1
-        elif data+_controler == 'mail':
-            publish_mail(i)
-            i = i + 1
+    channels=publish.list_channels()
+    for i in data:
+        if data[i]['channel'] in channels:
+           publish.publish(data[i]['channel']) 
         else:
-            print "ERROR Channel not found"
+            print "Error"
+    
 
-'''The fucation calling are commented over here,because the corresponding function calling has been replace after complete all module in the publish level''' 
+
 
 
 #send message to the twitter module

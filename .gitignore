@@ -1,1 +1,4 @@
-viralize/
+*.pyc
+UNKNOWN.egg-info/
+__pycache__/
+dist/

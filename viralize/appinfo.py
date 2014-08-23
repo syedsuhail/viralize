@@ -1,4 +1,0 @@
-
-CONSUMER_TOKEN='AvXk5i6L8MWrBseZtHcsMhr4L'
-CONSUMER_SECRET='7cBAdD0bcVR6ruX5GqZOqmLTiPJhRWh46ogcdlqgtjdk0NKqYb'
-CALLBACK_URL = 'http://localhost:5000/verify'

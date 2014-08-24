@@ -1,8 +1,16 @@
 import cli
 
 
-data=cli.get_user_data('scrap/viral.ini')
-channels=['Twitter','Facebook','Email']
+from sys import argv
+if __name__=='__main__':
+    filename = argv[1]
+else:
+    filename='viral.ini'
+
+
+data=cli.get_user_data(filename)
+channels=['Twitter','Facebook','Email','gmail']
+
 
 for dict1 in data:
     if dict1['channel'] in channels:
@@ -14,7 +22,10 @@ for dict1 in data:
             import channels.fb as fb
             fb.pub_fb(dict1)
         elif dict1['channel']=='Email':
-            import channels.smail
-            print 'hello'
+            from channels.smail import *
+            gmail(dict1)
+            print 'sent mail'
     else:
         print 'This app doesnt publish to %s'% dict1['channel']
+
+

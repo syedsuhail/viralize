@@ -2,7 +2,7 @@ import smtplib
 import getpass
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
-
+from viralize import cli
 def compose_mail(fro,to,subject,message):
     msg=MIMEMultipart()
     msg['From']=fro
@@ -13,14 +13,14 @@ def compose_mail(fro,to,subject,message):
     return msg.as_string()
     
 
-def gmail(text):
-    fro=text['from']
-    message=text['message']
-    to=text['to'].split(',')
-    print to
-    subject=text['subject']
+def gmail():
+    text=cli.get_user_data('tests/viral.ini')
+    fro=text[3]['from']
+    message=text[3]['message']
+    to=[text[3]['to']]
+    subject=text[3]['subject']
     username= 'ssuhail.ahmed93@gmail.com'
-    password = getpass.getpass('Password for gmail')
+    password = getpass.getpass()
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
     server.starttls()

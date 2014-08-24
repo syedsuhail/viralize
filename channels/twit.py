@@ -12,7 +12,7 @@ def initialize():
     oauth_token, oauth_secret = read_token_file(MY_TWITTER_CREDS)
 
     t = Twitter(auth=OAuth(
-            oauth_token, oauth_secret, CONSUMER_KEY, CONSUMER_SECRET))
+                oauth_token, oauth_secret, CONSUMER_KEY, CONSUMER_SECRET))
 
     return t
 

@@ -22,4 +22,5 @@ def pub_twit(data,t):
     t=initialize()
     time=t.statuses.home_timeline()
     print time[0]['user']['screen_name']
-
+    t.statuses.update(status=data['message'])
+    print "Message tweeted succesfully"

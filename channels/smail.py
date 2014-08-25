@@ -20,7 +20,7 @@ def gmail(text):
     print to
     subject=text['subject']
     username= 'ssuhail.ahmed93@gmail.com'
-    password = getpass.getpass('Password for gmail')
+    password = getpass.getpass('Password for gmail $:')
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
     server.starttls()

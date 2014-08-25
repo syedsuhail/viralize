@@ -9,7 +9,7 @@ else:
 
 
 data=cli.get_user_data(filename)
-channels=['Twitter','Facebook','Email','gmail']
+channels=['Twitter','Facebook','Email','gmail','Blog']
 
 
 for dict1 in data:
@@ -18,6 +18,10 @@ for dict1 in data:
             import channels.twit as twit
             t=twit.initialize()
             twit.pub_twit(dict1,t)
+        elif dict1['channel'] == 'Blog':
+            import channels.blog as blog
+            wp=blog.initialize()
+            blog.pub_blog(dict1,wp)
         elif dict1['channel']=='Facebook':
             import channels.fb as fb
             fb.pub_fb(dict1)

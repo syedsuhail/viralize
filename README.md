@@ -3,15 +3,15 @@ Introduction
 
 Viralize is an application that lets users create and publish their posts across multiple social media platforms (eg. Twitter, Facebook, Blogger) 
 
-Instractions
+Instructions
 ============
-The channels which are going to use in the application it should authenticate by the user.
+The channels which are being used in the application should authenticate the user.
 
-1.Create .INI file with the list of channel. [examble.ini](https://github.com/syedsuhail/viralize/blob/master/viral.ini)
+1.Create .INI file with the list of channels and messages. [example.ini](https://github.com/syedsuhail/viralize/blob/master/viral.ini)
 
 2.Call the setup file along with the .INI file
 		
-		./viralise examble.ini
+		./viralise example.ini
 
 One Page Spec
 =============

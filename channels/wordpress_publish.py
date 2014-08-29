@@ -38,7 +38,7 @@ def initialize():
 
     
 
-def wordpress_publish(data,wp):
+def publish(data):
     wp=initialize()
     if wp == None:
         return None

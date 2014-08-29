@@ -1,8 +1,8 @@
 from twitter import *
 import os
-import cli
 
-def twitter_publish(data):
+
+def publish(data):
     CONSUMER_KEY='PioawmiVQLIGSQCdLfN8wbgnJ'
     CONSUMER_SECRET='41SHzZ6uAGZoVGPCXGC3mPlZmzCan0m30xYvOK0EjdfZEJRFs1'
     MY_TWITTER_CREDS = os.path.expanduser('.twitter_credentials')
@@ -17,10 +17,8 @@ def twitter_publish(data):
     
     try:
         #t.statuses.update(status=data['message'])
-        info = "Message tweeted succesfully"
-        cli.show_info(info)
-        return 1
+        print "sending"
+    
+        return 'Successfully sent to Twitter'
     except:
-        info = "Could not publish to Twitter"
-        cli.show_info(info)
-        return None
+        return 'Error: Could not post to twitter'

@@ -1,4 +1,5 @@
 *.pyc
+*.py~
 UNKNOWN.egg-info/
 __pycache__/
 dist/

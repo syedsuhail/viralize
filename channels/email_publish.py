@@ -1,8 +1,8 @@
 import smtplib  
-import cli
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from binascii import unhexlify  
+
 def compose_mail(fro,to,subject,message):
     msg=MIMEMultipart()
     msg['From']=fro
@@ -13,7 +13,7 @@ def compose_mail(fro,to,subject,message):
     return msg.as_string()
 
 
-def gmail(text):
+def publish(text):
     fro=text['from']
     message=text['message']
     try:

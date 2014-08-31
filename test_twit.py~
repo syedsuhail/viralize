@@ -1,6 +1,0 @@
-from channels import twit
-
-def test_twitter_publish():
-    data={'message':'Hello','channel':'Twitter'}
-    twit.twitter_publish(data)
-    

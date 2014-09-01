@@ -36,6 +36,12 @@ def viralize(data):
                     continue
     return success
 
+def get_data(request):
+    value = cli.get_value(request)
+    return value
+
+
+
 
 if __name__=='__main__':
     viralize()

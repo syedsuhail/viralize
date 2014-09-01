@@ -16,20 +16,18 @@ def get_channels(channels_dir):
         module = importlib.import_module(module_name)
         chan.append(module)
     return chan
-        #plugin = module.__plugin__(parser)
-        #plugins[module.__cname__] = plugin
-
+        
 
 def viralize(data):
     channels = get_channels(channels_dir)
     success={}
     for channel in channels:
-        name=channel.__name__.split('.')[1].split('_')[0]
+        #\name=channel.__name__.split('.')[1].split('_')[0]
         for d in data:
             if d['channel'].lower() == name:
                 print 'doing %s' %name
                 try:
-                    res=getattr(channel,'publish')(d)
+                    res=channel.publish(d)
                     success[name]= res
                 except Exception:
                     print 'couldnt'

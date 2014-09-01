@@ -1,6 +1,7 @@
 import glob
 from os.path import basename, splitext
 import importlib
+import cli
 
 channels_dir='channels/'
 
@@ -33,6 +34,12 @@ def viralize(data):
                     print 'couldnt'
                     continue
     return success
+
+def get_data(request):
+    value = cli.get_value(request)
+    return value
+
+
 
 
 if __name__=='__main__':

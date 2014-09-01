@@ -35,6 +35,11 @@ def get_username_pass(service):
 def status(results):
     for key,value in results.iteritems():
         print key,value
+
+def get_value(request):
+    value = raw_input('Enter your %s' %request)
+    return value
+
     
 
 #def main():

@@ -1,6 +1,7 @@
 import glob
 from os.path import basename, splitext
 import importlib
+import cli
 
 channels_dir='channels/'
 

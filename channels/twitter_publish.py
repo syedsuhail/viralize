@@ -14,7 +14,8 @@ def publish(data):
 
     t = Twitter(auth=OAuth(
                 oauth_token, oauth_secret, CONSUMER_KEY, CONSUMER_SECRET))
-    
+    if len(data['channel']) <140:
+        return "Message is %s long.Only 240 allowed"%len(data['channel'])
     try:
         #t.statuses.update(status=data['message'])
         print "sending"

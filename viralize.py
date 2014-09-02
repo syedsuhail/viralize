@@ -23,16 +23,11 @@ def viralize(data):
     channels = get_channels(channels_dir)
     success={}
     for channel in channels:
-        #\name=channel.__name__.split('.')[1].split('_')[0]
+        name=channel.__name__.split('.')[1].split('_')[0]
         for d in data:
             if d['channel'].lower() == name:
-                print 'doing %s' %name
-                try:
-                    res=channel.publish(d)
-                    success[name]= res
-                except Exception:
-                    print 'couldnt'
-                    continue
+                res=channel.publish(d)
+                success[name]= res
     return success
 
 def get_data(request):

@@ -89,4 +89,3 @@ def publish():
         return 'Published the message in wordpress succesfully..'
     except Exception:
         return 'Could not publish'
-'

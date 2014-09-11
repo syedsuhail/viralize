@@ -1,6 +1,9 @@
 import os
-import ConfigParse
-import viralize
+import ConfigParser
+from tests import viralize
+from wordpress_xmlrpc import Client, WordPressPost
+from wordpress_xmlrpc.methods.posts import NewPost
+
 
 Wordpress_credential = os.path.expanduser('.credentials')
 
@@ -19,19 +22,21 @@ def get_value():
             return Wordpress_id,username,password
         except ConfigParser.NoOptionError:
             raise Error
+    #Values taken as user input
     else:
         Wordpress_id = viralize.get_data('Wordpress address')
         username = viralize.get_data('Wordpress username')
-        password = viralize.get_data('Wordpress password')
+        password = viralize.get_password('Wordpress password')
         Wordpress_id = Wordpress_id + "/xmlrpc.php"
+        Wordpress_id = Wordpress_id.encode('base64','strict');
+        username = username.encode('base64','strict');
+        password = password.encode('base64','strict');
         return Wordpress_id,username,password
 
-        
 
 def initialise():
     cfg = ConfigParser.RawConfigParser()
-    
-    #Creates if there no exist an credential file 
+    #Creates if there no exist an credential file
     if not os.path.exists(Wordpress_credential):
         cfg.read(Wordpress_credential)
         cfg.add_section('Wordpress')
@@ -41,10 +46,10 @@ def initialise():
         cfg.set('Wordpress', 'password', password)
         with open('.credentials', 'wb') as configfile:
             cfg.write(configfile)
-    #Read from the credential file
+            #Read from the credential file
     else:
         cfg.read(Wordpress_credential)
-	#Put Values in to the credential file
+        #Put Values in to the credential file
         if not cfg.has_section('Wordpress'):
             cfg.add_section('Wordpress')
             Wordpress_id,username, password = get_value()
@@ -52,35 +57,44 @@ def initialise():
             cfg.set('Wordpress', 'username', username)
             cfg.set('Wordpress', 'password', password)
             with open('.credentials', 'wb') as configfile:
-            cfg.write(configfile)
+                cfg.write(configfile)
         else:
-	    #Takes values from the credential file
-            Wordpress_id = cfg.get('Wordpress', 'Wordpressaddres')
-            username = cfg.get('Wordpress', 'username')
-            password = cfg.get('Wordpress', 'password')
+            #Takes values from the credential file
+            Wordpress_id,username, password = get_value()
+    
+
+    Wordpress_id = Wordpress_id.decode('base64','strict');
+    username = username.decode('base64','strict');
+    password = password.decode('base64','strict');
+            
     try:
-	#creates an wordpress object
+        #creates an wordpress object
         wp = Client(Wordpress_id, username, password)
         return wp
     except Exception:
         return 'could not authenticate'
 
-
-
-    
-def publish():
-    wp=initialize()
+def publish(data):
+    wp=initialise()
     post = WordPressPost()
     #Checks tittle is exist
-    if not data['tittle']:
-        return 'The tittle could not create as empty'
+    if 'tittle' in data:
+        if data['tittle'] != '':
+            post.title = data['tittle']
+        else:
+            return 'The tittle could not create as empty'
     else:
-        post.title = data['tittle']
+        return 'The tittle Should be in proper format'
+    
     #checks message is exist
-    if not data['message']:
-        return 'The message could not create as empty'
+    if 'message' in data:
+        if data['message'] != '':
+            post.content = data['message']
+        else:
+            return 'The message could not create as empty'
     else:
-        post.content = data['message']
+        return 'The message Should be in proper format'
+    
     post.terms_names = {'post_tag': ['test', 'firstpost'],'category': ['Introductions', 'Tests']}
     post.post_status = 'publish'
     #trying in to post on the wordpress
@@ -89,3 +103,4 @@ def publish():
         return 'Published the message in wordpress succesfully..'
     except Exception:
         return 'Could not publish'
+        

@@ -1,10 +1,10 @@
-from channels import blog
+from channels import wordpress_publish
 import ConfigParser
 import os
 from wordpress_xmlrpc import Client, WordPressPost
 
 
-wordpress = blog.Wordpress_credential
+wordpress = wordpress_publish.Wordpress_credential
 assert wordpress == ".credentials"
 
 def test_if_section():
@@ -20,7 +20,7 @@ def test_if_section():
         cfg.set('Wordpress', 'username', user)
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
-    ab,bc,cd = blog.get_value()
+    ab,bc,cd = wordpress_publish.get_value()
     assert ab == addres + "/xmlrpc.php"
     assert bc == user
     assert cd == pasw
@@ -34,7 +34,7 @@ def test_if_section():
     
 
 def test_if_not_section():
-    ab,bc,cd = blog.get_value()
+    ab,bc,cd = wordpress_publish.get_value()
     ab = ab.decode('base64','strict');
     bc = bc.decode('base64','strict');
     cd = cd.decode('base64','strict');
@@ -47,7 +47,7 @@ def test_if_not_section():
 def test_if_file_not_exixt():
     if os.path.exists(wordpress):
         os.remove(wordpress)
-    blog.initialise()
+    wordpress_publish.initialise()
     cfg = ConfigParser.RawConfigParser()
     cfg.read(wordpress)
     ab = cfg.get('Wordpress', 'Wordpressaddres')
@@ -68,7 +68,7 @@ def test_if_option_not_exixt_in_file():
         cfg.remove_section('Wordpress')
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
-    blog.initialise()
+    wordpress_publish.initialise()
     cfg = ConfigParser.RawConfigParser()
     cfg.read(wordpress)
     ab = cfg.get('Wordpress', 'Wordpressaddres')
@@ -93,7 +93,7 @@ def test_if_option_exist_in_file():
         cfg.set('Wordpress', 'username', user)
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
-    blog.initialise()
+    wordpress_publish.initialise()
     cfg = ConfigParser.RawConfigParser()
     cfg.read(wordpress)
     ab = cfg.get('Wordpress', 'Wordpressaddres')
@@ -118,7 +118,7 @@ def object_has_created():
         cfg.set('Wordpress', 'username', user)
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
-    ab = blog.initialise()
+    ab = wordpress_publish.initialise()
     cd = Client(addres, user, pasw)
     assert ab == cd
     if os.path.exists(wordpress):
@@ -137,15 +137,15 @@ def object_not_created():
         cfg.set('Wordpress', 'username', user)
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
-    ab = blog.initialise()
+    ab = wordpress_publish.initialise()
     assert ab == 'could not authenticate'
     if os.path.exists(wordpress):
         os.remove(wordpress)
     
 
 def test_tittle():
-    dict1 = {'title': 'Blog post throuh viralise'}
-    mes = blog.publish(dict1)
+    dict1 = {'title': 'wordpress_publish post throuh viralise'}
+    mes = wordpress_publish.publish(dict1)
     assert mes == 'The tittle Should be in proper format'
     if os.path.exists(wordpress):
         os.remove(wordpress)
@@ -153,15 +153,15 @@ def test_tittle():
 
 def test_tittle_empty():
     dict1 = {'tittle': ''}
-    mes = blog.publish(dict1)
+    mes = wordpress_publish.publish(dict1)
     assert mes == 'The tittle could not create as empty'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
 
 def test_message():
-    dict1 = {'tittle': 'abc', 'messssage': 'This a blog post from my app(viralise)'}
-    mes = blog.publish(dict1)
+    dict1 = {'tittle': 'abc', 'messssage': 'This a wordpress_publish post from my app(viralise)'}
+    mes = wordpress_publish.publish(dict1)
     assert mes == 'The message Should be in proper format'
     if os.path.exists(wordpress):
         os.remove(wordpress)
@@ -169,7 +169,7 @@ def test_message():
 
 def test_message():
     dict1 = {'tittle': 'abc', 'message':''}
-    mes = blog.publish(dict1)
+    mes = wordpress_publish.publish(dict1)
     assert mes == 'The message could not create as empty'
     if os.path.exists(wordpress):
         os.remove(wordpress)

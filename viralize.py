@@ -34,6 +34,9 @@ def get_data(request):
     value = cli.get_value(request)
     return value
 
+def get_password(request):
+    value = cli.get_passwd(request)
+    return value
 
 
 

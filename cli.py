@@ -37,10 +37,12 @@ def status(results):
         print key,value
 
 def get_value(request):
-    value = raw_input('Enter your %s' %request)
+    value = raw_input('Enter your %s :' %request)
     return value
 
-    
+def get_passwd(request):
+    value = getpass('Enter your %s :' %request)
+    return value
 
 #def main():
 #    data=get_user_data(data_file)

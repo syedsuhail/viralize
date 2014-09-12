@@ -1,5 +1,5 @@
 import os
-import ConfigParse
+import ConfigParser
 import viralize
 
 Wordpress_credential = os.path.expanduser('.credentials')
@@ -52,7 +52,7 @@ def initialise():
             cfg.set('Wordpress', 'username', username)
             cfg.set('Wordpress', 'password', password)
             with open('.credentials', 'wb') as configfile:
-            cfg.write(configfile)
+                cfg.write(configfile)
         else:
 	    #Takes values from the credential file
             Wordpress_id = cfg.get('Wordpress', 'Wordpressaddres')
@@ -89,4 +89,3 @@ def publish():
         return 'Published the message in wordpress succesfully..'
     except Exception:
         return 'Could not publish'
-'

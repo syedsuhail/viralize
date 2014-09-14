@@ -40,5 +40,4 @@ def get_password(request):
 
 
 
-if __name__=='__main__':
-    viralize()
+

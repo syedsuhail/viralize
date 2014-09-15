@@ -9,8 +9,9 @@ from email.MIMEText import MIMEText
 mail_credential = os.path.expanduser('.credentials')
 
 
-'''Returns the mail address,password which either taken from the credential file or as in the form of a user direct input. '''
+
 def get_value():
+    '''Returns the mail address,password which either taken from the credential file or as in the form of a user direct input. '''
     mail_credential = os.path.expanduser('.credentials')
     cfg = ConfigParser.RawConfigParser()
     cfg.read(mail_credential)
@@ -30,8 +31,9 @@ def get_value():
         password = password.encode('base64','strict');
         return mail_id,password
 
-'''Recives values from the get_value function and set in the credential file also returns the mail address,password for sending'''
+
 def initialise():
+    '''Recives values from the get_value function and set in the credential file also returns the mail address,password for sending'''
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file
     if not os.path.exists(mail_credential):
@@ -62,8 +64,9 @@ def initialise():
     password = password.decode('base64','strict');
     return mail_id,password
 
-'''Recives from address,to address,subject and message and returns a composed mail'''
+
 def compose_mail(fro,to,subject,message):
+    '''Recives from address,to address,subject and message and returns a composed mail'''
     msg=MIMEMultipart()
     msg['From']=fro
     msg['To']=to
@@ -74,8 +77,9 @@ def compose_mail(fro,to,subject,message):
 
 
 
-'''The mail sending operation on the website has been done and return the status message'''
+
 def publish(data):
+    '''The mail sending operation on the website has been done and return the status message'''
     mail_id,password = initialise()
     #checks the to address exsist
     if 'to' in data:

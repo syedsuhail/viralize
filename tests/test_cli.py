@@ -38,4 +38,4 @@ def test_status():
     sys.stdout = s
     cli.status(results)
     sys.stdout = old_stdout
-    assert s.getvalue() == "Twitter Hi\n"
+    assert s.getvalue() == "================== Twitter ===================\n\tHi\n"

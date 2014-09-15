@@ -144,21 +144,21 @@ def object_not_created():
     
 
 def test_tittle():
-    dict1 = {'title': 'wordpress_publish post throuh viralise'}
+    dict1 = {'title': 'wordpress_publish post throuh viralise','message':'hajab'}
     mes = wordpress_publish.publish(dict1)
     assert mes == 'The input in wordpress (tittle) may be wrong. Check your input methode'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
-'''
+
 def test_tittle_empty():
-    dict1 = {'tittle': ''}
+    dict1 = {'tittle': '','message':'dskjnjs'}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The input in wordpress (message) may be wrong. Check your input methode'
+    assert mes == 'Could not publish'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
-'''
+
 def test_message():
     dict1 = {'tittle': 'abc', 'messssage': 'This a wordpress_publish post from my app(viralise)'}
     mes = wordpress_publish.publish(dict1)
@@ -166,11 +166,10 @@ def test_message():
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
-''''
+
 def test_message():
     dict1 = {'tittle': 'abc', 'message':''}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The message could not create as empty'
+    assert mes == 'The message in wordpress could not create as empty'
     if os.path.exists(wordpress):
         os.remove(wordpress)
-'''

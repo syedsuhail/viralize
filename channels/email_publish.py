@@ -30,7 +30,7 @@ def get_value():
         password = password.encode('base64','strict');
         return mail_id,password
 
- '''Recives values from the get_value function and set in the credential file also returns the mail address,password for sending'''
+'''Recives values from the get_value function and set in the credential file also returns the mail address,password for sending'''
 def initialise():
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file

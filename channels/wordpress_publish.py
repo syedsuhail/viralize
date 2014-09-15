@@ -33,7 +33,7 @@ def get_value():
         return Wordpress_id,username,password
 
 
- '''Recives values from the get_value function and set in the credential file also returns the Wodpress address,Username,password for publishing'''
+'''Recives values from the get_value function and set in the credential file also returns the Wodpress address,Username,password for publishing'''
 def initialise():
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file

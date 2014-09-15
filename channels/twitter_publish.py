@@ -2,8 +2,9 @@ from twitter import *
 import os
 import controller
 
-'''Recives tokens from the credential file and trying to tweet on twiter account and return the status message'''
+
 def publish(data):
+    '''Recives tokens from the credential file and trying to tweet on twiter account and return the status message'''
     CONSUMER_KEY='PioawmiVQLIGSQCdLfN8wbgnJ'
     CONSUMER_SECRET='41SHzZ6uAGZoVGPCXGC3mPlZmzCan0m30xYvOK0EjdfZEJRFs1'
     MY_TWITTER_CREDS = os.path.expanduser('.tcredentials')

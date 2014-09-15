@@ -18,7 +18,7 @@ def get_user_data(filename):
             if dict1[option] == -1:
                 print("skip: %s" % option)
             if config.get(section,option) == '':
-                print "In section %s, %s value is empty"%(section,option)
+                print "\nIn section %s, %s value is empty"%(section,option)
             
         data.append(dict1)
     return data
@@ -27,20 +27,21 @@ def get_user_data(filename):
 
 def status(results):
     for key,value in results.iteritems():
-        print key,value
+        print "==================",key,"==================="
+        print "\t",value
 
 def get_value(request):
-    value = raw_input('Enter your %s :' %request)
+    value = raw_input('\nEnter your %s :' %request)
     return value
 
 def get_passwd(request):
-    value = getpass('Enter your %s :' %request)
+    value = getpass('\nEnter your %s :' %request)
     return value
 
 def warning(msg,request):
     y = raw_input('%s ' %msg)
     if y == 'no' or y == 'No' or y == 'NO':
-        value = raw_input('Enter the %s :' %request)
+        value = raw_input('\nEnter the %s :' %request)
     elif y == 'yes' or y == 'Yes' or y == 'YES':
         value = ''
     else:

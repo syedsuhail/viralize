@@ -1,8 +1,8 @@
 from twitter import *
 import os
-import viralize
+import controller
 
-
+'''Recives tokens from the credential file and trying to tweet on twiter account and return the status message'''
 def publish(data):
     CONSUMER_KEY='PioawmiVQLIGSQCdLfN8wbgnJ'
     CONSUMER_SECRET='41SHzZ6uAGZoVGPCXGC3mPlZmzCan0m30xYvOK0EjdfZEJRFs1'
@@ -11,11 +11,15 @@ def publish(data):
         oauth_dance("Viralise", CONSUMER_KEY, CONSUMER_SECRET,
                     MY_TWITTER_CREDS)
 
-    oauth_token, oauth_secret = read_token_file(MY_TWITTER_CREDS)
+    try:
+        oauth_token, oauth_secret = read_token_file(MY_TWITTER_CREDS)
+    except Exception:
+        return 'The redential file has been crashed'
+        
     try:
         t = Twitter(auth=OAuth(oauth_token, oauth_secret, CONSUMER_KEY, CONSUMER_SECRET))
     except Exception:
-        return "Check your internet connection or the credential file has been crashed"
+        return "Check your internet connection "
 
     if 'message' in data:
         if data['message'] != '':
@@ -23,7 +27,7 @@ def publish(data):
         else:
             msg = "Do you want to continue as message in twitter as empty(yes/no):"
             request = "Twitter message"
-            y,value = viralize.warning(msg,request)
+            y,value = controller.warning(msg,request)
             if  y == 'no' or y == 'NO' or y == 'No':
                 message = value
             elif y == 'yes' or y == 'YES' or y == 'Yes':
@@ -31,7 +35,7 @@ def publish(data):
             else:
                 return 'Wrong option is given'
     else: 
-        return 'The input in mail (message) may be wrong. Check your input methode'
+        return 'The input in twitter (message) may be wrong. Check your input methode'
 
     if len(message) > 140:
          return "Message is %s long twitter only post 140 character" %len(message)

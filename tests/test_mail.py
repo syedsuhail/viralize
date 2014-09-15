@@ -129,14 +129,14 @@ def test_message():
     if os.path.exists(mail):
         os.remove(mail)
 
-'''
+
 def test_message_empty():
-    dict1 = {'to': 'abc', 'message':''}
+    dict1 = {'to': 'abc', 'message':'', 'subject':'hjgsjhbs'}
     mes = email_publish.publish(dict1)
-    assert mes == 'The message could not create as empty'
+    assert mes == 'could not authenticate'
     if os.path.exists(mail):
         os.remove(mail)
-'''
+
 def test_subject():
     dict1 = {'to': 'abc', 'message':'abcd','subjbect':'abcd'}
     mes = email_publish.publish(dict1)
@@ -144,14 +144,14 @@ def test_subject():
     if os.path.exists(mail):
         os.remove(mail)
 
-'''
+
 def test_subject_empty():
     dict1 = {'to': 'abc', 'message':'abcd','subject':''}
     mes = email_publish.publish(dict1)
-    assert mes == 'The subject could not create as empty'
+    assert mes == 'could not authenticate'
     if os.path.exists(mail):
         os.remove(mail)
-'''
+
 def test_canot_login():
     dict1 = {'to': 'abc', 'message':'abcd','subject':'hjgsjhbs'}
     mes = email_publish.publish(dict1)

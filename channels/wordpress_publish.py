@@ -1,13 +1,13 @@
 import os
 import ConfigParser
-import viralize
+import controller
 from wordpress_xmlrpc import Client, WordPressPost
 from wordpress_xmlrpc.methods.posts import NewPost
 
 
 Wordpress_credential = os.path.expanduser('.credentials')
 
-'''Returns the Wordpress address'''
+'''Returns the Wordpress address, Username, Password which either taken from the credential file or as in the form of a user direct input,.'''
 def get_value():
     Wordpress_credential = os.path.expanduser('.credentials')
     cfg = ConfigParser.RawConfigParser()
@@ -23,9 +23,9 @@ def get_value():
             raise Error
     #Values taken as user input
     else:
-        Wordpress_id = viralize.get_data('Wordpress address')
-        username = viralize.get_data('Wordpress username')
-        password = viralize.get_password('Wordpress password')
+        Wordpress_id = controller.get_data('Wordpress address')
+        username = controller.get_data('Wordpress username')
+        password = controller.get_password('Wordpress password')
         Wordpress_id = Wordpress_id + "/xmlrpc.php"
         Wordpress_id = Wordpress_id.encode('base64','strict');
         username = username.encode('base64','strict');
@@ -33,6 +33,7 @@ def get_value():
         return Wordpress_id,username,password
 
 
+ '''Recives values from the get_value function and set in the credential file also returns the Wodpress address,Username,password for publishing'''
 def initialise():
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file
@@ -73,6 +74,9 @@ def initialise():
     except Exception:
         return "Check your internet connection"
 
+
+
+'''The publishing operation on the website has been done and return the status message'''
 def publish(data):
     wp = initialise()
     post = WordPressPost()
@@ -83,14 +87,14 @@ def publish(data):
         else:
             msg = "Do you want to continue as tittle in wordpress as empty(yes/no):"
             request = "Wordpress tittle"
-            y,value = viralize.warning(msg,request)
+            y,value = controller.warning(msg,request)
             if  y != 'abcd':
                 message = value
             else:
                 return 'Given option is wrong:'
 
     else:
-        return 'The tittle Should be in proper format'
+        return 'The input in wordpress (tittle) may be wrong. Check your input methode'
     
     #checks message is exist
     if 'message' in data:
@@ -99,7 +103,7 @@ def publish(data):
         else:
             return 'The message in wordpress could not create as empty'
     else:
-        return 'The message Should be in proper format'
+        return 'The input in wordpress (message) may be wrong. Check your input methode'
     
     post.terms_names = {'post_tag': ['test', 'firstpost'],'category': ['Introductions', 'Tests']}
     post.post_status = 'publish'
@@ -111,3 +115,4 @@ def publish(data):
     except Exception:
         return 'Could not publish'
         
+ 

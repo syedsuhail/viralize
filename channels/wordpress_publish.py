@@ -7,8 +7,9 @@ from wordpress_xmlrpc.methods.posts import NewPost
 
 Wordpress_credential = os.path.expanduser('.credentials')
 
-'''Returns the Wordpress address, Username, Password which either taken from the credential file or as in the form of a user direct input,.'''
+
 def get_value():
+    '''Returns the Wordpress address, Username, Password which either taken from the credential file or as in the form of a user direct input,.'''
     Wordpress_credential = os.path.expanduser('.credentials')
     cfg = ConfigParser.RawConfigParser()
     cfg.read(Wordpress_credential)
@@ -33,8 +34,9 @@ def get_value():
         return Wordpress_id,username,password
 
 
-'''Recives values from the get_value function and set in the credential file also returns the Wodpress address,Username,password for publishing'''
+
 def initialise():
+    '''Recives values from the get_value function and set in the credential file also returns the Wodpress address,Username,password for publishing'''
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file
     if not os.path.exists(Wordpress_credential):
@@ -76,8 +78,9 @@ def initialise():
 
 
 
-'''The publishing operation on the website has been done and return the status message'''
+
 def publish(data):
+    '''The publishing operation on the website has been done and return the status message'''
     wp = initialise()
     post = WordPressPost()
     #Checks tittle is exist

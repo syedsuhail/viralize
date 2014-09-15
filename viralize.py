@@ -2,7 +2,7 @@ import glob
 from os.path import basename, splitext
 import importlib
 import cli
-
+ 
 channels_dir='channels/'
 
 def get_channels(channels_dir):
@@ -26,8 +26,8 @@ def viralize(data):
         name=channel.__name__.split('.')[1].split('_')[0]
         for d in data:
             if d['channel'].lower() == name:
-                res=channel.publish(d)
-                success[name]= res
+                res = channel.publish(d)
+                success[name] = res
     return success
 
 def get_data(request):
@@ -38,6 +38,7 @@ def get_password(request):
     value = cli.get_passwd(request)
     return value
 
-
-
-
+def warning(msg,request):
+    y,value = cli.warning(msg,request)
+    return y,value
+    

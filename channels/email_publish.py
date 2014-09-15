@@ -1,6 +1,6 @@
 import os
 import ConfigParser
-import viralize
+import controller
 import smtplib  
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText 
@@ -8,7 +8,8 @@ from email.MIMEText import MIMEText
 
 mail_credential = os.path.expanduser('.credentials')
 
-'''Returns the mail address'''
+
+'''Returns the mail address,password which either taken from the credential file or as in the form of a user direct input. '''
 def get_value():
     mail_credential = os.path.expanduser('.credentials')
     cfg = ConfigParser.RawConfigParser()
@@ -23,13 +24,13 @@ def get_value():
             raise Error
     #Values taken as user input
     else:
-        mail_id = viralize.get_data('mail address')
-        password = viralize.get_password('mail password')
+        mail_id = controller.get_data('mail address')
+        password = controller.get_password('mail password')
         mail_id = mail_id.encode('base64','strict');
         password = password.encode('base64','strict');
         return mail_id,password
 
-
+ '''Recives values from the get_value function and set in the credential file also returns the mail address,password for sending'''
 def initialise():
     cfg = ConfigParser.RawConfigParser()
     #Creates if there no exist an credential file
@@ -61,7 +62,7 @@ def initialise():
     password = password.decode('base64','strict');
     return mail_id,password
 
-
+'''Recives from address,to address,subject and message and returns a composed mail'''
 def compose_mail(fro,to,subject,message):
     msg=MIMEMultipart()
     msg['From']=fro
@@ -73,7 +74,7 @@ def compose_mail(fro,to,subject,message):
 
 
 
-
+'''The mail sending operation on the website has been done and return the status message'''
 def publish(data):
     mail_id,password = initialise()
     #checks the to address exsist
@@ -95,22 +96,22 @@ def publish(data):
         else:
             msg = "Do you want to continue as message in mail as empty(yes/no):"
             request = "Email message"
-            y,value = viralize.warning(msg,request)
+            y,value = controller.warning(msg,request)
             if  y != 'abcd':
                 message = value
             else:
                 return 'Given option is wrong:'
-    else:
+    else: 
         return 'The input in mail (message) may be wrong. Check your input methode'
         
     #Checks subject is exist
     if 'subject' in data:
         if data['subject'] != '':
              subject = data['subject']
-        else:
+        else: 
             msg = "Do you want to continue as subject in mail as empty(yes/no):"
             request = "Email Subject"
-            y,value = viralize.warning(msg,request)
+            y,value = controller.warning(msg,request)
             if  y != 'abcd':
                 subject = value
             else:
@@ -139,3 +140,4 @@ def publish(data):
         return 'could not send'
     
     server.quit()
+    

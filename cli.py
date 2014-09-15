@@ -6,7 +6,7 @@ from sys import argv
 from binascii import hexlify
 import controller
 data_file = 'viral.ini'
-import controller
+import viralize
 
 def get_user_data(filename):
     '''Gets relevant data from ini file and returns a list of dictionaries'''
@@ -39,7 +39,7 @@ def get_value(request):
 
 def get_passwd(request):
     value = getpass('Enter your %s :' %request)
-    return value
+    return hexlify(value)
 
 def warning(msg,request):
     y = raw_input('%s ' %msg)

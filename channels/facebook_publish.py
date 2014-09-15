@@ -15,7 +15,7 @@ def publish(data):
             message = data['message']
         else:
             msg = "Do you want to continue as message in facebook as empty(yes/no):"
-            request = "Twitter message"
+            request = "Facebook message"
             y,value = controller.warning(msg,request)
             if  y == 'no' or y == 'NO' or y == 'No':
                 message = value

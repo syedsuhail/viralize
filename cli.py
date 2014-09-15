@@ -1,9 +1,10 @@
 import ConfigParser
 import sys
+from configobj import ConfigObj
 from getpass import getpass
 from sys import argv
 from binascii import hexlify
-import viralize
+import controller
 data_file = 'viral.ini'
 
 def get_user_data(filename):

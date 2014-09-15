@@ -1,6 +1,6 @@
 import os
 import ConfigParser
-from tests import viralize
+from tests import mock_viralize
 import smtplib  
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText

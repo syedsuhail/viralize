@@ -6,6 +6,7 @@ import cli
 channels_dir='channels/'
 
 def get_channels(channels_dir):
+    '''Given a channel directory the function scans the directory and returns a list of channels'''
     channels={}
     chan=[]
     channel_files = glob.glob("{}/*.py".format(channels_dir))
@@ -20,6 +21,7 @@ def get_channels(channels_dir):
         
 
 def viralize(data):
+    '''The data is sent to appropriate channels where data is a list of dictionaries'''
     channels = get_channels(channels_dir)
     success={}
     for channel in channels:
@@ -31,10 +33,12 @@ def viralize(data):
     return success
 
 def get_data(request):
+    '''Get value from user from command line.Returnts the value'''
     value = cli.get_value(request)
     return value
 
 def get_password(request):
+    '''pass password request to command line'''
     value = cli.get_passwd(request)
     return value
 

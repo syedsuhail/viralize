@@ -21,7 +21,7 @@ def test_if_section():
     with open('.credentials', 'wb') as configfile:
         cfg.write(configfile)
     ab,bc,cd = wordpress_publish.get_value()
-    assert ab == addres + "/xmlrpc.php"
+    assert ab == addres
     assert bc == user
     assert cd == pasw
     
@@ -56,7 +56,7 @@ def test_if_file_not_exixt():
     ab = ab.decode('base64','strict');
     bc = bc.decode('base64','strict');
     cd = cd.decode('base64','strict');
-    assert ab == "amvarish"
+    assert ab == "amvarish/xmlrpc.php"
     assert bc == "amvarish"
     assert cd == "amvarish"
 
@@ -106,9 +106,9 @@ def test_if_option_exist_in_file():
         os.remove(wordpress)
 
 def object_has_created():
-    addres = '36rahu'
-    pasw = '36Kumbidi'
-    user = 'rahul'
+    addres = 'ajb,mcxnndv'
+    pasw = 'kjfkjnsdkjnd'
+    user = 'DJNkjndkla'
     cfg = ConfigParser.RawConfigParser()
     cfg.read(wordpress)
     if not cfg.has_section('Wordpress'):
@@ -127,8 +127,8 @@ def object_has_created():
 
 
 def object_not_created():
-    addres = '36rahu'
-    user = 'rahul'
+    addres = 'nlknal'
+    user = 'snlksmkms'
     cfg = ConfigParser.RawConfigParser()
     cfg.read(wordpress)
     if not cfg.has_section('Wordpress'):
@@ -144,17 +144,17 @@ def object_not_created():
     
 
 def test_tittle():
-    dict1 = {'title': 'wordpress_publish post throuh viralise'}
+    dict1 = {'title': 'wordpress_publish post throuh viralise','message':'hajab'}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The tittle Should be in proper format'
+    assert mes == 'The input in wordpress (tittle) may be wrong. Check your input methode'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
 
 def test_tittle_empty():
-    dict1 = {'tittle': ''}
+    dict1 = {'tittle': '','message':'dskjnjs'}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The tittle could not create as empty'
+    assert mes == 'Could not publish'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
@@ -162,7 +162,7 @@ def test_tittle_empty():
 def test_message():
     dict1 = {'tittle': 'abc', 'messssage': 'This a wordpress_publish post from my app(viralise)'}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The message Should be in proper format'
+    assert mes == 'The input in wordpress (message) may be wrong. Check your input methode'
     if os.path.exists(wordpress):
         os.remove(wordpress)
 
@@ -170,6 +170,6 @@ def test_message():
 def test_message():
     dict1 = {'tittle': 'abc', 'message':''}
     mes = wordpress_publish.publish(dict1)
-    assert mes == 'The message could not create as empty'
+    assert mes == 'The message in wordpress could not create as empty'
     if os.path.exists(wordpress):
         os.remove(wordpress)

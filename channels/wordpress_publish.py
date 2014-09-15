@@ -1,6 +1,6 @@
 import os
 import ConfigParser
-from tests import viralize
+import viralize
 from wordpress_xmlrpc import Client, WordPressPost
 from wordpress_xmlrpc.methods.posts import NewPost
 
@@ -18,7 +18,6 @@ def get_value():
             Wordpress_id = cfg.get('Wordpress', 'Wordpressaddres')
             password = cfg.get('Wordpress', 'password')
             username = cfg.get('Wordpress', 'username')
-            Wordpress_id = Wordpress_id + "/xmlrpc.php"
             return Wordpress_id,username,password
         except ConfigParser.NoOptionError:
             raise Error
@@ -41,7 +40,7 @@ def initialise():
         cfg.read(Wordpress_credential)
         cfg.add_section('Wordpress')
         Wordpress_id,username, password = get_value()
-        cfg.set('Wordpress', 'Wordpressaddres', username)
+        cfg.set('Wordpress', 'Wordpressaddres', Wordpress_id)
         cfg.set('Wordpress', 'username', username)
         cfg.set('Wordpress', 'password', password)
         with open('.credentials', 'wb') as configfile:
@@ -63,8 +62,8 @@ def initialise():
             Wordpress_id,username, password = get_value()
     
 
-    Wordpress_id = Wordpress_id.decode('base64','strict');
-    username = username.decode('base64','strict');
+    Wordpress_id = Wordpress_id.decode('base64','strict'); 
+    username = username.decode('base64','strict'); 
     password = password.decode('base64','strict');
             
     try:
@@ -72,17 +71,24 @@ def initialise():
         wp = Client(Wordpress_id, username, password)
         return wp
     except Exception:
-        return 'could not authenticate'
+        return "Check your internet connection"
 
 def publish(data):
-    wp=initialise()
+    wp = initialise()
     post = WordPressPost()
     #Checks tittle is exist
     if 'tittle' in data:
         if data['tittle'] != '':
             post.title = data['tittle']
         else:
-            return 'The tittle could not create as empty'
+            msg = "Do you want to continue as tittle in wordpress as empty(yes/no):"
+            request = "Wordpress tittle"
+            y,value = viralize.warning(msg,request)
+            if  y != 'abcd':
+                message = value
+            else:
+                return 'Given option is wrong:'
+
     else:
         return 'The tittle Should be in proper format'
     
@@ -91,12 +97,13 @@ def publish(data):
         if data['message'] != '':
             post.content = data['message']
         else:
-            return 'The message could not create as empty'
+            return 'The message in wordpress could not create as empty'
     else:
         return 'The message Should be in proper format'
     
     post.terms_names = {'post_tag': ['test', 'firstpost'],'category': ['Introductions', 'Tests']}
     post.post_status = 'publish'
+
     #trying in to post on the wordpress
     try:
         wp.call(NewPost(post))
@@ -104,4 +111,3 @@ def publish(data):
     except Exception:
         return 'Could not publish'
         
- 

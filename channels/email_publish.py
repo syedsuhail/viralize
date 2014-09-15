@@ -1,10 +1,9 @@
 import os
 import ConfigParser
-from tests import mock_viralize
+import viralize
 import smtplib  
 from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from binascii import unhexlify  
+from email.MIMEText import MIMEText 
 
 
 mail_credential = os.path.expanduser('.credentials')
@@ -19,19 +18,16 @@ def get_value():
         try:
             mail_id = cfg.get('mail', 'mailaddres')
             password = cfg.get('mail', 'password')
-            username = cfg.get('mail', 'username')
-            return mail_id,username,password
+            return mail_id,password
         except ConfigParser.NoOptionError:
             raise Error
     #Values taken as user input
     else:
         mail_id = viralize.get_data('mail address')
-        username = viralize.get_data('mail username')
         password = viralize.get_password('mail password')
         mail_id = mail_id.encode('base64','strict');
-        username = username.encode('base64','strict');
         password = password.encode('base64','strict');
-        return mail_id,username,password
+        return mail_id,password
 
 
 def initialise():
@@ -40,9 +36,8 @@ def initialise():
     if not os.path.exists(mail_credential):
         cfg.read(mail_credential)
         cfg.add_section('mail')
-        mail_id,username, password = get_value()
-        cfg.set('mail', 'mailaddres', username)
-        cfg.set('mail', 'username', username)
+        mail_id,password = get_value()
+        cfg.set('mail', 'mailaddres', mail_id)
         cfg.set('mail', 'password', password)
         with open('.credentials', 'wb') as configfile:
             cfg.write(configfile)
@@ -52,21 +47,19 @@ def initialise():
         #Put Values in to the credential file
         if not cfg.has_section('mail'):
             cfg.add_section('mail')
-            mail_id,username, password = get_value()
+            mail_id,password = get_value()
             cfg.set('mail', 'mailaddres', mail_id)
-            cfg.set('mail', 'username', username)
             cfg.set('mail', 'password', password)
             with open('.credentials', 'wb') as configfile:
                 cfg.write(configfile)
         else:
             #Takes values from the credential file
-            mail_id,username, password = get_value()
+            mail_id,password = get_value()
     
 
     mail_id = mail_id.decode('base64','strict');
-    username = username.decode('base64','strict');
     password = password.decode('base64','strict');
-    return mail_id,username,password
+    return mail_id,password
 
 
 def compose_mail(fro,to,subject,message):
@@ -82,7 +75,7 @@ def compose_mail(fro,to,subject,message):
 
 
 def publish(data):
-    mail_id,username,password = initialise()
+    mail_id,password = initialise()
     #checks the to address exsist
     if 'to' in data:
         if data['to'] != '':
@@ -93,31 +86,47 @@ def publish(data):
         else:
             return 'The to address could not create as empty'
     else:
-        return 'The to address Should be in proper format'
+        return 'The input in mail (to address) may be wrong. Check your input methode'
         
     #checks message is exist
     if 'message' in data:
         if data['message'] != '':
             message = data['message']
         else:
-            return 'The message could not create as empty'
+            msg = "Do you want to continue as message in mail as empty(yes/no):"
+            request = "Email message"
+            y,value = viralize.warning(msg,request)
+            if  y != 'abcd':
+                message = value
+            else:
+                return 'Given option is wrong:'
     else:
-        return 'The message Should be in proper format'
+        return 'The input in mail (message) may be wrong. Check your input methode'
         
     #Checks subject is exist
     if 'subject' in data:
         if data['subject'] != '':
              subject = data['subject']
         else:
-            return 'The subject could not create as empty'
-    else:
-        return 'The subject Should be in proper format'
+            msg = "Do you want to continue as subject in mail as empty(yes/no):"
+            request = "Email Subject"
+            y,value = viralize.warning(msg,request)
+            if  y != 'abcd':
+                subject = value
+            else:
+                return 'Given option is wrong:'
 
-    server = smtplib.SMTP('smtp.gmail.com:587')
+    else:
+        return 'The input in mail (subject)may be wrong. Check your input methode'
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com:587')
+    except Exception:
+        return "Check your internet connection"
     server.ehlo()
     server.starttls()
     try:
-        server.login(username,password)
+        server.login(mail_id,password)
     except Exception:
         return "could not authenticate"
     try:
@@ -130,4 +139,3 @@ def publish(data):
         return 'could not send'
     
     server.quit()
-    

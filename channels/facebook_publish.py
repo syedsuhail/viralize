@@ -1,8 +1,9 @@
 import fbconsole
 import controller
 
-'''Recives tokens from the credential file and trying to post on facebook account and return the status message'''
+
 def publish(data):
+    '''Recives tokens from the credential file and trying to post on facebook account and return the status message'''
     fbconsole.AUTH_SCOPE=['publish_stream']
     try:
         fbconsole.authenticate()

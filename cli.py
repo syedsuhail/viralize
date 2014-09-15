@@ -3,13 +3,10 @@ import sys
 from configobj import ConfigObj
 from getpass import getpass
 from sys import argv
-<<<<<<< HEAD
 from binascii import hexlify
 import controller
 data_file = 'viral.ini'
-=======
-import viralize
->>>>>>> 82d75301af640edfac5a4d90f6ec08001ea0ebaf
+import controller
 
 def get_user_data(filename):
     '''Gets relevant data from ini file and returns a list of dictionaries'''
@@ -56,10 +53,6 @@ def warning(msg,request):
     return y,value
         
 
-def main():
-    data = get_user_data(data_file)
-    results = viralize.viralize(data)
-    status(results)
 
 if __name__=='__main__':
     try:

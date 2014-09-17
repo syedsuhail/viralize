@@ -1,7 +1,7 @@
 from channels import twitter_publish
 import os
 import ConfigParser
-
+import __builtin__
 MY_TWITTER_CREDS = os.path.expanduser('.tcredentials')
 
 def test_reading():
@@ -36,7 +36,7 @@ def test_message_not_exist():
 
 
 
-def test_message_empty():
+def test_message_empty(monkeypatch):
     abc = 'helllo'
     cfg = ConfigParser.RawConfigParser()
     cfg.read(MY_TWITTER_CREDS)
@@ -46,8 +46,11 @@ def test_message_empty():
     with open('.tcredentials', 'wb') as configfile:
         cfg.write(configfile)
     data={'channel':'test','message':''}
+    def mock_raw_input(*args, **kwargs):
+        return 'hai';
+    monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
     ab = twitter_publish.publish(data)
-    assert ab == 'Twitter Cannot post the blank message' 
+    assert ab == 'Wrong option is given' 
     if os.path.exists(MY_TWITTER_CREDS):
         os.remove(MY_TWITTER_CREDS)
 

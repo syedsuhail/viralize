@@ -26,15 +26,7 @@ def publish(data):
         if data['message'] != '':
             message = data['message']
         else:
-            msg = "Do you want to continue as message in twitter as empty(yes/no):"
-            request = "Twitter message"
-            y,value = controller.warning(msg,request)
-            if  y == 'no' or y == 'NO' or y == 'No':
-                message = value
-            elif y == 'yes' or y == 'YES' or y == 'Yes':
-                return 'Twitter Cannot post the blank message'
-            else:
-                return 'Wrong option is given'
+            return 'Twitter Cannot post the blank message'
     else: 
         return 'The input in twitter (message) may be wrong. Check your input methode'
 

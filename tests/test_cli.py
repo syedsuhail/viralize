@@ -39,4 +39,4 @@ def test_status():
     sys.stdout = s
     cli.status(results,abc)
     sys.stdout = old_stdout
-    assert s.getvalue() == "\x1b[1;33m================== hellooo =========================\x1b[1;m\nStatus :  {'Twitter': 'hellooo'}\n"
+    assert s.getvalue() == "\x1b[1;32m================== hellooo =========================\x1b[1;m\nStatus :  {'Twitter': 'hellooo'}\n"

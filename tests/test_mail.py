@@ -33,8 +33,11 @@ def test_if_section():
 def test_if_not_section(monkeypatch):
     def mock_raw_input(*args, **kwargs):
         return 'hai';
+    def mock_getpass(*args, **kwargs):
+        return 'hai';
+
     monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
-    monkeypatch.setattr(getpass, 'getpass', mock_raw_input)
+    monkeypatch.setattr(getpass, 'getpass', mock_getpass)
     ab,cd = email_publish.get_value()
     ab = ab.decode('base64','strict');
     cd = cd.decode('base64','strict');
@@ -107,23 +110,6 @@ def test_if_option_exist_in_file(monkeypatch):
     if os.path.exists(mail):
         os.remove(mail)
 
-def object_has_created():
-    addres = '3skmnksjnk'
-    pasw = 'akjhskla'
-    cfg = ConfigParser.RawConfigParser()
-    cfg.read(mail)
-    if not cfg.has_section('mail'):
-        cfg.add_section('mail')
-        cfg.set('mail', 'mailaddres', addres)
-        cfg.set('mail', 'password', pasw)
-    with open('.credentials', 'wb') as configfile:
-        cfg.write(configfile)
-    ab = email_publish.initialise()
-    cd = Client(addres,pasw)
-    assert ab == cd
-    if os.path.exists(mail):
-        os.remove(mail)
-
 
 def test_to_address(monkeypatch):
     dict1 = {'toac': 'abc', 'message':'abcd'}
@@ -166,7 +152,7 @@ def test_message_empty(monkeypatch):
     monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
     monkeypatch.setattr(getpass, 'getpass', mock_raw_input)
     mes = email_publish.publish(dict1)
-    assert mes == 'Given option is wrong:'
+    assert mes == 'could not authenticate'
     if os.path.exists(mail):
         os.remove(mail)
 
@@ -189,7 +175,7 @@ def test_subject_empty(monkeypatch):
     monkeypatch.setattr(__builtin__, 'raw_input', mock_raw_input)
     monkeypatch.setattr(getpass, 'getpass', mock_raw_input)
     mes = email_publish.publish(dict1)
-    assert mes == 'Given option is wrong:'
+    assert mes == 'could not authenticate'
     if os.path.exists(mail):
         os.remove(mail)
 

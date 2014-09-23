@@ -1,6 +1,6 @@
 import ConfigParser
 import sys
-from getpass import getpass
+import getpass
 from sys import argv
 import controller
 
@@ -23,31 +23,18 @@ def get_user_data(filename):
         data.append(dict1)
     return data
 
+def status(results,key):
+    print "\033[1;33m==================",key,"=========================\033[1;m"
+    print "Status : ",results
 
-
-def status(results):
-    for key,value in results.iteritems():
-        print "==================",key,"==================="
-        print "\t",value
 
 def get_value(request):
     value = raw_input('\nEnter your %s :' %request)
     return value
 
 def get_passwd(request):
-    value = getpass('\nEnter your %s :' %request)
+    value = getpass.getpass('\nEnter your %s :' %request)
     return value
-
-def warning(msg,request):
-    y = raw_input('%s ' %msg)
-    if y == 'no' or y == 'No' or y == 'NO':
-        value = raw_input('\nEnter the %s :' %request)
-    elif y == 'yes' or y == 'Yes' or y == 'YES':
-        value = ''
-    else:
-        y = 'abcd'
-        value = ''
-    return y,value
         
 
 def main():
@@ -62,6 +49,6 @@ if __name__=='__main__':
         print "Needs argument"
         raise
     data = get_user_data(filename)
-    results = controller.viralize(data)
-    status(results)
+    abc = controller.viralize(data)
+    
 

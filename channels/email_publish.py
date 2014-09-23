@@ -98,29 +98,16 @@ def publish(data):
         if data['message'] != '':
             message = data['message']
         else:
-            msg = "Do you want to continue as message in mail as empty(yes/no):"
-            request = "Email message"
-            y,value = controller.warning(msg,request)
-            if  y != 'abcd':
-                message = value
-            else:
-                return 'Given option is wrong:'
+            message = ''
     else: 
         return 'The input in mail (message) may be wrong. Check your input methode'
         
     #Checks subject is exist
     if 'subject' in data:
         if data['subject'] != '':
-             subject = data['subject']
+            subject = data['subject']
         else: 
-            msg = "Do you want to continue as subject in mail as empty(yes/no):"
-            request = "Email Subject"
-            y,value = controller.warning(msg,request)
-            if  y != 'abcd':
-                subject = value
-            else:
-                return 'Given option is wrong:'
-
+            subject = ''
     else:
         return 'The input in mail (subject)may be wrong. Check your input methode'
 

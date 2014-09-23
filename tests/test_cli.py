@@ -32,10 +32,11 @@ def test_get_user_data():
     
 
 def test_status():
-    results={'Twitter':'Hi'}
+    results={'Twitter':'hellooo'}
+    abc = "hellooo"
     s = StringIO.StringIO()
     old_stdout = sys.stdout
     sys.stdout = s
-    cli.status(results)
+    cli.status(results,abc)
     sys.stdout = old_stdout
-    assert s.getvalue() == "================== Twitter ===================\n\tHi\n"
+    assert s.getvalue() == "\x1b[1;33m================== hellooo =========================\x1b[1;m\nStatus :  {'Twitter': 'hellooo'}\n"

@@ -24,7 +24,7 @@ def get_user_data(filename):
     return data
 
 def status(results,key):
-    print "\033[1;33m==================",key,"=========================\033[1;m"
+    print "\033[1;32m==================",key,"=========================\033[1;m"
     print "Status : ",results
 
 

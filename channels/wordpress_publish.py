@@ -88,14 +88,7 @@ def publish(data):
         if data['tittle'] != '':
             post.title = data['tittle']
         else:
-            msg = "Do you want to continue as tittle in wordpress as empty(yes/no):"
-            request = "Wordpress tittle"
-            y,value = controller.warning(msg,request)
-            if  y != 'abcd':
-                message = value
-            else:
-                return 'Given option is wrong:'
-
+            post.title = ''
     else:
         return 'The input in wordpress (tittle) may be wrong. Check your input methode'
     
@@ -118,4 +111,3 @@ def publish(data):
     except Exception:
         return 'Could not publish'
         
- 

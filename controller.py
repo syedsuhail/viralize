@@ -8,7 +8,7 @@ channels_dir='channels/'
 def get_channels(channels_dir):
     '''Given a channel directory the function scans the directory and returns a list of channels'''
     channels={}
-    chan=[]
+    chan=[] 
     channel_files = glob.glob("{}/*.py".format(channels_dir))
     for channel_file in channel_files:
         if channel_file.endswith("__init__.py"):
@@ -29,6 +29,7 @@ def viralize(data):
         for d in data:
             if d['channel'].lower() == name:
                 res = channel.publish(d)
+                cli.status(res,name)
                 success[name] = res
     return success
 
@@ -41,8 +42,4 @@ def get_password(request):
     '''pass password request to command line'''
     value = cli.get_passwd(request)
     return value
-
-def warning(msg,request):
-    y,value = cli.warning(msg,request)
-    return y,value
     
